@@ -117,12 +117,13 @@ RSpec.describe MobilizeAmericaClient::Client::Events do
     let(:org_id) { 123 }
     let(:event_id) { 456 }
     let(:events_url) { "#{base_url}/organizations/#{org_id}/events/#{event_id}" }
-    let(:response) { '{"hello": "world"}' }
+    let(:response) { {'hello' => "world"} }
 
     it 'should support pagination parameters' do
       stub_request(:get, events_url)
           .with(headers: standard_headers)
           .to_return(body: response.to_json, headers: response_headers)
+
       expect(subject.organization_event(organization_id: org_id, event_id: event_id)).to eq(response)
     end
   end
@@ -135,9 +136,11 @@ RSpec.describe MobilizeAmericaClient::Client::Events do
 
     it 'should return an attendee creation' do
       stub_request(:post, events_url)
-          .with(headers: standard_headers)
-          .to_return(body: response.to_json, headers: response_headers)
-      expect(subject.create_organization_event_attendance(organization_id: org_id, event_id: event_id, attendance_data: {})).to eq(response)
+          .with(headers: standard_headers, body: {'foo' => 'bar'}.to_json)
+          .to_return(body: response, headers: response_headers, status: 201)
+
+      api_resp = subject.create_organization_event_attendance(organization_id: org_id, event_id: event_id, attendance_data: {'foo' => 'bar'})
+      expect(api_resp).to eq(JSON.parse(response))
     end
   end
 end

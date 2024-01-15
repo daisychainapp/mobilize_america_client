@@ -28,8 +28,7 @@ module MobilizeAmericaClient
         unless api_key.nil?
           req.headers['Authorization'] = "Bearer #{api_key}"
         end
-
-        req.body = ::JSON.generate(body) unless body.empty?
+        req.body = body unless body.empty?
       end
 
       if response.status == 401

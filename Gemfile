@@ -8,5 +8,5 @@ group :development do
   gem 'webmock'
   gem 'rubocop'
   gem 'dotenv'
-  gem 'byebug'
+  gem 'debug'
 end
