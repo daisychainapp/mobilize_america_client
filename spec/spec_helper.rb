@@ -1,10 +1,10 @@
-require "bundler/setup"
+require 'bundler/setup'
 require 'rspec'
 require 'webmock/rspec'
 
 $LOAD_PATH << File.join(File.dirname(__FILE__), '..', 'lib')
 
-require "mobilize_america_client"
+require 'mobilize_america_client'
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure

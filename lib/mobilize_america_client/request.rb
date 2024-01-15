@@ -40,7 +40,7 @@ module MobilizeAmericaClient
         raise MobilizeAmericaClient::NotFoundError
       end
 
-      JSON.parse(response.body)
+      response.body
     end
   end
 end

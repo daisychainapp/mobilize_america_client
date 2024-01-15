@@ -10,9 +10,10 @@ RSpec.describe MobilizeAmericaClient::Client::Enums do
   describe '#enums' do
     let(:enums_url) { "#{base_url}/enums" }
     let(:response) { {'hello' => 'world'} }
+    let(:response_headers) { {'Content-Type' => 'application/json'} }
 
     it 'should call the endpoint and return JSON' do
-      stub_request(:get, enums_url).with(headers: standard_headers).to_return(body: response.to_json)
+      stub_request(:get, enums_url).with(headers: standard_headers).to_return(body: response.to_json, headers: response_headers)
       expect(subject.enums).to eq response
     end
   end
