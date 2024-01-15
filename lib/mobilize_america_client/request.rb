@@ -39,6 +39,14 @@ module MobilizeAmericaClient
         raise MobilizeAmericaClient::NotFoundError
       end
 
+      if response.status == 400
+        raise MobilizeAmericaClient::BadRequestError, response.body
+      end
+
+      if response.status == 422
+        raise MobilizeAmericaClient::UnprocessableEntityError, response.body
+      end
+
       response.body
     end
   end
