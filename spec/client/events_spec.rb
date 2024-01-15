@@ -142,5 +142,16 @@ RSpec.describe MobilizeAmericaClient::Client::Events do
       api_resp = subject.create_organization_event_attendance(organization_id: org_id, event_id: event_id, attendance_data: {'foo' => 'bar'})
       expect(api_resp).to eq(JSON.parse(response))
     end
+
+    it 'should raise on error response' do
+      stub_request(:post, events_url)
+        .with(headers: standard_headers, body: {'foo' => 'bar'}.to_json)
+        .to_return(body: response, headers: response_headers, status: 400)
+
+      expect do
+        subject.create_organization_event_attendance(organization_id: org_id, event_id: event_id, attendance_data: {'foo' => 'bar'})
+      end.to raise_error(MobilizeAmericaClient::BadRequestError)
+
+    end
   end
 end
