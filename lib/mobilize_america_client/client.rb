@@ -9,10 +9,7 @@ require 'mobilize_america_client/errors'
 
 module MobilizeAmericaClient
   class Client
-<<<<<<< Updated upstream
-=======
 
->>>>>>> Stashed changes
     attr_reader :connection
     attr_accessor :api_key
 
@@ -21,7 +18,10 @@ module MobilizeAmericaClient
 
       api_domain = options[:api_domain] || API_DOMAIN
 
-      @connection = Faraday.new(url: "https://#{api_domain}", request: { params_encoder: Faraday::FlatParamsEncoder })
+      @connection = Faraday.new(url: "https://#{api_domain}", request: { params_encoder: Faraday::FlatParamsEncoder }) do |conn|
+        conn.request :json
+        conn.response :json, content_type: /\bjson$/
+      end
     end
 
     include MobilizeAmericaClient::Request
