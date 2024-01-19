@@ -1,4 +1,5 @@
 require 'faraday'
+require 'mobilize_america_client/version'
 require 'mobilize_america_client/client/attendances'
 require 'mobilize_america_client/client/enums'
 require 'mobilize_america_client/client/events'
@@ -8,6 +9,10 @@ require 'mobilize_america_client/errors'
 
 module MobilizeAmericaClient
   class Client
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
     attr_reader :connection
     attr_accessor :api_key
 
