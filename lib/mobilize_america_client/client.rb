@@ -9,7 +9,6 @@ require 'mobilize_america_client/errors'
 
 module MobilizeAmericaClient
   class Client
-
     attr_reader :connection
     attr_accessor :api_key
 

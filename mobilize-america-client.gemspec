@@ -2,6 +2,7 @@
 lib = File.expand_path('lib', __dir__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
+
 require 'mobilize_america_client/version'
 
 Gem::Specification.new do |s|
@@ -14,7 +15,7 @@ Gem::Specification.new do |s|
   s.date = "2023-03-02"
   s.email = ["grey@controlshiftlabs.com", 'nathan@daisychain.app'].freeze
   s.executables = ["console".freeze, "setup".freeze]
-  s.extra_rdoc_files = %w[LICENSE README.md]
+  s.extra_rdoc_files = %w[LICENSE README.md].freeze
   s.files = Dir.chdir(__dir__) do
     `git ls-files -z`.split("\x0").reject do |f|
       (f == __FILE__) || f.match(%r{\A(?:(?:bin|test|spec|features)/|\.(?:git|circleci)|appveyor)})

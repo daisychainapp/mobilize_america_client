@@ -28,8 +28,7 @@ module MobilizeAmericaClient
         unless api_key.nil?
           req.headers['Authorization'] = "Bearer #{api_key}"
         end
-
-        req.body = ::JSON.generate(body) unless body.empty?
+        req.body = body unless body.empty?
       end
 
       if response.status == 401
@@ -40,7 +39,15 @@ module MobilizeAmericaClient
         raise MobilizeAmericaClient::NotFoundError
       end
 
-      JSON.parse(response.body)
+      if response.status == 400
+        raise MobilizeAmericaClient::BadRequestError, response.body
+      end
+
+      if response.status == 422
+        raise MobilizeAmericaClient::UnprocessableEntityError, response.body
+      end
+
+      response.body
     end
   end
 end
