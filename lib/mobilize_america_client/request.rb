@@ -40,7 +40,7 @@ module MobilizeAmericaClient
       end
 
       if response.status == 400
-        raise MobilizeAmericaClient::BadRequestError, response.body
+        raise MobilizeAmericaClient::BadRequestError.new(response.body, response.body['error'])
       end
 
       if response.status == 422
