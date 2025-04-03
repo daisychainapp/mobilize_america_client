@@ -18,7 +18,6 @@ RSpec::Core::RakeTask.new do |t|
   t.rspec_opts = '--color'
 end
 
-
 desc "Code coverage detail"
 task :simplecov do
   ENV['COVERAGE'] = "true"

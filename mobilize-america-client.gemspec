@@ -29,6 +29,8 @@ Gem::Specification.new do |s|
   s.specification_version = 4
 
   s.add_runtime_dependency(%q<faraday>.freeze, ["~> 2"])
+  s.add_runtime_dependency(%q<bigdecimal>.freeze, [">= 0"])
+  s.add_runtime_dependency(%q<base64>.freeze, [">= 0"])
   s.add_development_dependency(%q<rspec>.freeze, [">= 0"])
   s.add_development_dependency(%q<juwelier>.freeze, [">= 0"])
   s.add_development_dependency(%q<rake>.freeze, [">= 0"])

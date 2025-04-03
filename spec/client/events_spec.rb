@@ -111,6 +111,27 @@ RSpec.describe MobilizeAmericaClient::Client::Events do
         .to_return(body: response.to_json, headers: response_headers)
       expect(subject.organization_events(organization_id: org_id, exclude_full: true)).to eq(response)
     end
+
+    it 'should support a visibility parameter' do
+      stub_request(:get, events_url)
+        .with(headers: standard_headers, query: {visibility: 'PUBLIC'})
+        .to_return(body: response.to_json, headers: response_headers)
+      expect(subject.organization_events(organization_id: org_id, visibility: 'PUBLIC')).to eq(response)
+    end
+
+    it 'should support a visibility parameter as array' do
+      stub_request(:get, events_url)
+        .with(headers: standard_headers, query: { visibility:  'PUBLIC' })
+        .to_return(body: response.to_json, headers: response_headers)
+      expect(subject.organization_events(organization_id: org_id, visibility: ['PUBLIC'])).to eq(response)
+    end
+
+    it 'should support a visibility parameter as multi-attribute' do
+      stub_request(:get, events_url)
+        .with(headers: standard_headers, query: 'visibility=PUBLIC&visibility=PRIVATE')
+        .to_return(body: response.to_json, headers: response_headers)
+      expect(subject.organization_events(organization_id: org_id, visibility: %w[PUBLIC PRIVATE])).to eq(response)
+    end
   end
 
   describe '#organization_event' do
