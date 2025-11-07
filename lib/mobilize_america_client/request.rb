@@ -32,24 +32,24 @@ module MobilizeAmericaClient
       end
 
       if response.status == 401
-        raise MobilizeAmericaClient::UnauthorizedError
+        raise MobilizeAmericaClient::UnauthorizedError.new('Unauthorized', response.headers.to_h, response.body)
       end
 
       if response.status == 404
-        raise MobilizeAmericaClient::NotFoundError
+        raise MobilizeAmericaClient::NotFoundError.new('Not Found', response.headers.to_h, response.body)
       end
 
       if response.status == 400
-        raise MobilizeAmericaClient::BadRequestError.new(response.body, response.body['error'])
+        raise MobilizeAmericaClient::BadRequestError.new(response.body, response.body['error'], response.headers.to_h, response.body)
       end
 
       if response.status == 422
-        raise MobilizeAmericaClient::UnprocessableEntityError, response.body
+        raise MobilizeAmericaClient::UnprocessableEntityError.new('Unprocessable Entity', response.headers.to_h, response.body)
       end
 
       # Check for rate limiting in response body
       if response.body.is_a?(Hash) && response.body['error'] == 'rate-limited'
-        raise MobilizeAmericaClient::RateLimitError.new('Rate limit exceeded', response.headers.to_h)
+        raise MobilizeAmericaClient::RateLimitError.new('Rate limit exceeded', response.headers.to_h, response.body)
       end
 
       response.body

@@ -1,30 +1,25 @@
 module MobilizeAmericaClient
-  class NotFoundError < StandardError; end
-  class UnauthorizedError < StandardError; end
-  class BadRequestError < StandardError
+  class ResponseError < StandardError
+    attr_reader :headers, :body
+
+    def initialize(message, headers = nil, body = nil)
+      super(message)
+      @headers = headers
+      @body = body
+    end
+  end
+
+  class NotFoundError < ResponseError; end
+  class UnauthorizedError < ResponseError; end
+  class BadRequestError < ResponseError
     attr_reader :error_data
 
-    def initialize(message, error_data)
-      # Call the parent's constructor to set the message
-      super(message)
-
-      # Store the action in an instance variable
+    def initialize(message, error_data, headers = nil, body = nil)
+      super(message, headers, body)
       @error_data = error_data
     end
-
   end
 
-  class UnprocessableEntityError < StandardError; end
-
-  class RateLimitError < StandardError
-    attr_reader :headers
-
-    def initialize(message, headers)
-      # Call the parent's constructor to set the message
-      super(message)
-
-      # Store the headers in an instance variable
-      @headers = headers
-    end
-  end
+  class UnprocessableEntityError < ResponseError; end
+  class RateLimitError < ResponseError; end
 end
