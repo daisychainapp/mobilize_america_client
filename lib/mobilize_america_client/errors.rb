@@ -15,4 +15,16 @@ module MobilizeAmericaClient
   end
 
   class UnprocessableEntityError < StandardError; end
+
+  class RateLimitError < StandardError
+    attr_reader :headers
+
+    def initialize(message, headers)
+      # Call the parent's constructor to set the message
+      super(message)
+
+      # Store the headers in an instance variable
+      @headers = headers
+    end
+  end
 end

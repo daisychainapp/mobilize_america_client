@@ -47,6 +47,11 @@ module MobilizeAmericaClient
         raise MobilizeAmericaClient::UnprocessableEntityError, response.body
       end
 
+      # Check for rate limiting in response body
+      if response.body.is_a?(Hash) && response.body['error'] == 'rate-limited'
+        raise MobilizeAmericaClient::RateLimitError.new('Rate limit exceeded', response.headers.to_h)
+      end
+
       response.body
     end
   end
