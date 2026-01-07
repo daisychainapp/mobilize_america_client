@@ -1,6 +1,7 @@
 module MobilizeAmericaClient
   class ResponseError < StandardError
     attr_reader :headers, :body
+    attr_accessor :rollbar_context
 
     def initialize(message, headers = nil, body = nil)
       super(message)
