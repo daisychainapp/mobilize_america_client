@@ -4,6 +4,7 @@ require 'mobilize_america_client/client/attendances'
 require 'mobilize_america_client/client/enums'
 require 'mobilize_america_client/client/events'
 require 'mobilize_america_client/client/organizations'
+require 'mobilize_america_client/client/people'
 require 'mobilize_america_client/request'
 require 'mobilize_america_client/errors'
 
@@ -28,5 +29,6 @@ module MobilizeAmericaClient
     include MobilizeAmericaClient::Client::Enums
     include MobilizeAmericaClient::Client::Events
     include MobilizeAmericaClient::Client::Organizations
+    include MobilizeAmericaClient::Client::People
   end
 end
