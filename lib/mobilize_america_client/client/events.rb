@@ -42,12 +42,15 @@ module MobilizeAmericaClient
           params[:event_campaign_id] = event_campaign_id.to_i
         end
 
+        # Mobilize expects multi-value filters as repeated query params
+        # (tag_id=1&tag_id=2); comma-joined values are rejected as a single
+        # invalid element. FlatParamsEncoder encodes arrays as repeated keys.
         unless tag_ids.nil? || tag_ids.empty?
-          params[:tag_id] = tag_ids.join(',')
+          params[:tag_id] = tag_ids
         end
 
         unless event_types.nil? || event_types.empty?
-          params[:event_types] = event_types.join(',')
+          params[:event_types] = event_types
         end
 
         unless is_virtual.nil?

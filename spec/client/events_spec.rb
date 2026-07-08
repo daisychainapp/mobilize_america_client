@@ -84,18 +84,25 @@ RSpec.describe MobilizeAmericaClient::Client::Events do
       expect(subject.organization_events(organization_id: org_id, event_campaign_id: 1)).to eq(response)
     end
 
-    it 'should support a tag ids parameter' do
-      stub_request(:get, events_url)
-        .with(headers: standard_headers, query: {tag_id: 'foo,bar'})
+    it 'should send multiple tag ids as repeated query params' do
+      stub_request(:get, "#{events_url}?tag_id=foo&tag_id=bar")
+        .with(headers: standard_headers)
         .to_return(body: response.to_json, headers: response_headers)
       expect(subject.organization_events(organization_id: org_id, tag_ids: ['foo', 'bar'])).to eq(response)
     end
 
-    it 'should support an event types parameter' do
-      stub_request(:get, events_url)
-        .with(headers: standard_headers, query: {event_types: 'foo,bar'})
+    it 'should send multiple event types as repeated query params' do
+      stub_request(:get, "#{events_url}?event_types=foo&event_types=bar")
+        .with(headers: standard_headers)
         .to_return(body: response.to_json, headers: response_headers)
       expect(subject.organization_events(organization_id: org_id, event_types: ['foo', 'bar'])).to eq(response)
+    end
+
+    it 'should send a single event type as a plain query param' do
+      stub_request(:get, events_url)
+        .with(headers: standard_headers, query: {event_types: 'foo'})
+        .to_return(body: response.to_json, headers: response_headers)
+      expect(subject.organization_events(organization_id: org_id, event_types: ['foo'])).to eq(response)
     end
 
     it 'should support a virtual parameter' do
