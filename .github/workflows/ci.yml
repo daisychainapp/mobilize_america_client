@@ -1,24 +1,25 @@
 name: CI
-on: [push]
+on:
+  push:
+    branches: [main]
+  pull_request:
 
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v5
       - uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 3.2.1
+          ruby-version-file: .ruby-version
           bundler-cache: true
-      - run: bundle install
       - run: bundle exec rspec
   rubocop:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v5
       - uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 3.2.1
+          ruby-version-file: .ruby-version
           bundler-cache: true
-      - run: bundle install
       - run: bundle exec rubocop
