@@ -13,6 +13,7 @@ module MobilizeAmericaClient
 
   class NotFoundError < ResponseError; end
   class UnauthorizedError < ResponseError; end
+  class ForbiddenError < ResponseError; end
   class BadRequestError < ResponseError
     attr_reader :error_data
 
