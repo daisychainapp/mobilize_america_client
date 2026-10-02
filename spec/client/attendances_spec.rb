@@ -23,6 +23,12 @@ RSpec.describe MobilizeAmericaClient::Client::Attendances do
       end
     end
 
+    it 'should raise if response status is 403' do
+      stub_request(:get, attendances_url).with(headers: expected_headers).to_return(status: 403, body: {error: 'forbidden'}.to_json)
+
+      expect { subject.organization_attendances(organization_id: org_id) }.to raise_error MobilizeAmericaClient::ForbiddenError
+    end
+
     it 'should raise if response status is 404' do
       stub_request(:get, attendances_url).with(headers: expected_headers).to_return(status: 404, body: {error: 'not found'}.to_json)
 

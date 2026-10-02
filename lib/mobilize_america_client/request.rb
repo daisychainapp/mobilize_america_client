@@ -46,6 +46,8 @@ module MobilizeAmericaClient
         raise MobilizeAmericaClient::BadRequestError.new(body, body['error'], headers, body, status:)
       when 401
         raise MobilizeAmericaClient::UnauthorizedError.new('Unauthorized', headers, body, status:)
+      when 403
+        raise MobilizeAmericaClient::ForbiddenError.new('Forbidden', headers, body, status:)
       when 404
         raise MobilizeAmericaClient::NotFoundError.new('Not Found', headers, body, status:)
       when 422
